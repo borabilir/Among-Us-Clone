@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 7979163123326869597}
   - component: {fileID: 1293444727678312473}
   - component: {fileID: 5342085759176453664}
+  - component: {fileID: 3734526385895617154}
   m_Layer: 0
   m_Name: AU_Player
   m_TagString: Player
@@ -145,6 +146,25 @@ CapsuleCollider:
   m_Height: 0.9163583
   m_Direction: 1
   m_Center: {x: -0.011405706, y: -0.041820854, z: 0}
+--- !u!95 &3734526385895617154
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061518436438352589}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 49c81df156c9fea48a459be51fae5140, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5436004528441179854
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,7 +176,7 @@ GameObject:
   - component: {fileID: 2192355223407259958}
   - component: {fileID: 512437753346688392}
   m_Layer: 0
-  m_Name: Sprite
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

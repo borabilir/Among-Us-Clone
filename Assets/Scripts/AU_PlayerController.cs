@@ -8,6 +8,7 @@ public class AU_PlayerController : MonoBehaviour
     //Components
     Rigidbody myRB;
     Transform myAvatar;
+    Animator myAnim;
 
     //Player movement
     [SerializeField] InputAction WASD;
@@ -28,6 +29,7 @@ public class AU_PlayerController : MonoBehaviour
     {
         myRB = GetComponent<Rigidbody>();
         myAvatar = transform.GetChild(0);
+        myAnim = GetComponent<Animator>();
     }
 
     private void Update()
@@ -40,6 +42,7 @@ public class AU_PlayerController : MonoBehaviour
             myAvatar.localScale = new Vector2(Mathf.Sign(movementInput.x), 1);
         }
 
+        myAnim.SetFloat("Speed", movementInput.magnitude);
     }
 
     private void FixedUpdate()
