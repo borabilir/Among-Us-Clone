@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 2973143996082036071}
   - component: {fileID: 1872528984601140471}
   - component: {fileID: 3308966349204887300}
-  m_Layer: 0
+  - component: {fileID: 3313572368335617708}
+  m_Layer: 8
   m_Name: AU_Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -181,6 +182,30 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3313572368335617708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190137114298812235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3a45fbb752dfbd4784b154f29b19608, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ignoreMe:
+    serializedVersion: 2
+    m_Bits: 256
+  getRadius: 20
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 512
+  sceneObjects: []
+  lightRays: {fileID: 0}
+  offset: 0.05
+  showRed: 0
+  showGreen: 0
 --- !u!1 &1724200292091936486
 GameObject:
   m_ObjectHideFlags: 0
