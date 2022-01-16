@@ -26,11 +26,12 @@ public class AU_PlayerController : MonoBehaviour
     [SerializeField] bool isImposter;
     [SerializeField] InputAction KILL;
 
-
+    List<AU_PlayerController> targets;
     AU_PlayerController target;
     [SerializeField] Collider myCollider;
 
     bool isDead;
+    [SerializeField] GameObject bodyPrefab;
 
     private void Awake()
     {
@@ -54,15 +55,17 @@ public class AU_PlayerController : MonoBehaviour
         if (hasControl)
             localPlayer = this;
 
+        targets = new List<AU_PlayerController>();
         myRB = GetComponent<Rigidbody>();
         myAvatar = transform.GetChild(0);
         myAnim = GetComponent<Animator>();
-
         myAvatarSprite = myAvatar.GetComponent<SpriteRenderer>();
-        if (myColor == Color.clear)
-            myColor = Color.white;
+
         if (!hasControl)
             return;
+        if (myColor == Color.clear)
+            myColor = Color.white;
+
         myAvatarSprite.color = myColor;
     }
 
@@ -113,29 +116,39 @@ public class AU_PlayerController : MonoBehaviour
                     return;
                 else
                 {
-                    target = tempTarget;
-                    Debug.Log(target.name);
+                    targets.Add(tempTarget);
                 }
 
             }
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            AU_PlayerController tempTarget = other.GetComponent<AU_PlayerController>();
+            if (targets.Contains(tempTarget))
+            {
+                targets.Remove(tempTarget);
+            }
+        }
+    }
 
     private void KillTarget(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            if (target == null)
+            if (targets.Count == 0)
                 return;
             else
             {
-                if (target.isDead)
+                if (targets[targets.Count - 1].isDead)
                     return;
 
-                transform.position = target.transform.position;
-                target.Die();
-                target = null;
+                transform.position = targets[targets.Count - 1].transform.position;
+                targets[targets.Count - 1].Die();
+                targets.RemoveAt(targets.Count - 1);
             }
         }
     }
@@ -147,8 +160,8 @@ public class AU_PlayerController : MonoBehaviour
         myAnim.SetBool("IsDead", isDead);
         myCollider.enabled = false;
 
-        //AU_Body tempBody = Instantiate(bodyPrefab, transform.position, transform.rotation).GetComponent<AU_Body>();
-        //tempBody.SetColor(myAvatarSprite.color);
+        AU_Body tempBody = Instantiate(bodyPrefab, transform.position, transform.rotation).GetComponent<AU_Body>();
+        tempBody.SetColor(myAvatarSprite.color);
         //gameObject.layer = 7;
     }
 
