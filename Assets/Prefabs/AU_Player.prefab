@@ -163,6 +163,18 @@ MonoBehaviour:
     m_Flags: 0
   myCollider: {fileID: 2973143996082036071}
   bodyPrefab: {fileID: 6503582150883817197, guid: 076b722a91bcf2b469ed2054d3909e9b, type: 3}
+  REPORT:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 37845c5f-97d3-4cdf-9fc3-b8d6328a5271
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  ignoreForBody:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!95 &3308966349204887300
 Animator:
   serializedVersion: 3

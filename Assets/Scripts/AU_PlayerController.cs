@@ -33,21 +33,30 @@ public class AU_PlayerController : MonoBehaviour
     bool isDead;
     [SerializeField] GameObject bodyPrefab;
 
+    public static List<Transform> allBodies;
+    List<Transform> bodiesFound;
+
+    [SerializeField] InputAction REPORT;
+    [SerializeField] LayerMask ignoreForBody;
+
     private void Awake()
     {
         KILL.performed += KillTarget;
+        REPORT.performed += ReportBody;
     }
 
     private void OnEnable()
     {
         WASD.Enable();
         KILL.Enable();
+        REPORT.Enable();
     }
 
     private void OnDisable()
     {
         WASD.Disable();
-        KILL.Enable();
+        KILL.Disable();
+        REPORT.Disable();
     }
 
     private void Start()
@@ -67,6 +76,9 @@ public class AU_PlayerController : MonoBehaviour
             myColor = Color.white;
 
         myAvatarSprite.color = myColor;
+
+        allBodies = new List<Transform>();
+        bodiesFound = new List<Transform>();
     }
 
     private void Update()
@@ -82,6 +94,11 @@ public class AU_PlayerController : MonoBehaviour
         {
             // Turn left right sprite
             myAvatar.localScale = new Vector2(Mathf.Sign(movementInput.x), 1);
+        }
+
+        if (allBodies.Count > 0)
+        {
+            BodySearch();
         }
     }
 
@@ -155,14 +172,53 @@ public class AU_PlayerController : MonoBehaviour
 
     public void Die()
     {
+        AU_Body tempBody = Instantiate(bodyPrefab, transform.position, transform.rotation).GetComponent<AU_Body>();
+        tempBody.SetColor(myAvatarSprite.color);
+
         isDead = true;
 
         myAnim.SetBool("IsDead", isDead);
+        gameObject.layer = 10;
         myCollider.enabled = false;
+    }
 
-        AU_Body tempBody = Instantiate(bodyPrefab, transform.position, transform.rotation).GetComponent<AU_Body>();
-        tempBody.SetColor(myAvatarSprite.color);
-        //gameObject.layer = 7;
+    void BodySearch()
+    {
+        foreach (Transform body in allBodies)
+        {
+            RaycastHit hit;
+            Ray ray = new Ray(transform.position, body.position - transform.position);
+            Debug.DrawRay(transform.position, body.position - transform.position, Color.cyan);
+            if (Physics.Raycast(ray, out hit, 1000f, ~ignoreForBody))
+            {
+                if (hit.transform == body)
+                {
+                    // Debug.Log(hit.transform.name);
+                    // Debug.Log(bodiesFound.Count);
+                    if (bodiesFound.Contains(body.transform))
+                        return;
+                    bodiesFound.Add(body.transform);
+                }
+                else
+                {
+                    bodiesFound.Remove(body.transform);
+                }
+            }
+
+        }
+    }
+
+
+    private void ReportBody(InputAction.CallbackContext obj)
+    {
+        if (bodiesFound == null)
+            return;
+        if (bodiesFound.Count == 0)
+            return;
+        Transform tempBody = bodiesFound[bodiesFound.Count - 1];
+        allBodies.Remove(tempBody);
+        bodiesFound.Remove(tempBody);
+        tempBody.GetComponent<AU_Body>().Report();
     }
 
 }
