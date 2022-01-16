@@ -22,15 +22,31 @@ public class AU_PlayerController : MonoBehaviour
     static Color myColor;
     SpriteRenderer myAvatarSprite;
 
+    //Role
+    [SerializeField] bool isImposter;
+    [SerializeField] InputAction KILL;
+
+
+    AU_PlayerController target;
+    [SerializeField] Collider myCollider;
+
+    bool isDead;
+
+    private void Awake()
+    {
+        KILL.performed += KillTarget;
+    }
 
     private void OnEnable()
     {
         WASD.Enable();
+        KILL.Enable();
     }
 
     private void OnDisable()
     {
         WASD.Disable();
+        KILL.Enable();
     }
 
     private void Start()
@@ -52,22 +68,25 @@ public class AU_PlayerController : MonoBehaviour
 
     private void Update()
     {
-       movementInput = WASD.ReadValue<Vector2>();
+        if (!hasControl)
+            return;
+
+        movementInput = WASD.ReadValue<Vector2>();
+
+        myAnim.SetFloat("Speed", movementInput.magnitude);
 
         if (movementInput.x != 0)
         {
             // Turn left right sprite
             myAvatar.localScale = new Vector2(Mathf.Sign(movementInput.x), 1);
         }
-
-        myAnim.SetFloat("Speed", movementInput.magnitude);
     }
 
     private void FixedUpdate()
     {
         myRB.velocity = movementInput * movementSpeed;
     }
-    
+
     public void SetColor(Color newColor)
     {
         myColor = newColor;
@@ -75,6 +94,62 @@ public class AU_PlayerController : MonoBehaviour
         {
             myAvatarSprite.color = myColor;
         }
+    }
+
+    public void SetRole(bool newRole)
+    {
+        isImposter = newRole;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            AU_PlayerController tempTarget = other.GetComponent<AU_PlayerController>();
+
+            if (isImposter)
+            {
+                if (tempTarget.isImposter)
+                    return;
+                else
+                {
+                    target = tempTarget;
+                    Debug.Log(target.name);
+                }
+
+            }
+        }
+    }
+
+
+    private void KillTarget(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            if (target == null)
+                return;
+            else
+            {
+                if (target.isDead)
+                    return;
+
+                transform.position = target.transform.position;
+                target.Die();
+                target = null;
+            }
+        }
+    }
+
+    public void Die()
+    {
+        isDead = true;
+
+        myAnim.SetBool("IsDead", isDead);
+        myCollider.enabled = false;
+
+        //AU_Body tempBody = Instantiate(bodyPrefab, transform.position, transform.rotation).GetComponent<AU_Body>();
+        //tempBody.SetColor(myAvatarSprite.color);
+        //gameObject.layer = 7;
     }
 
 }
