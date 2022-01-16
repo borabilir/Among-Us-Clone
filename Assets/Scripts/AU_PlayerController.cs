@@ -5,6 +5,9 @@ using UnityEngine.InputSystem;
 
 public class AU_PlayerController : MonoBehaviour
 {
+    [SerializeField] bool hasControl;
+    public static AU_PlayerController localPlayer;
+
     //Components
     Rigidbody myRB;
     Transform myAvatar;
@@ -14,6 +17,11 @@ public class AU_PlayerController : MonoBehaviour
     [SerializeField] InputAction WASD;
     Vector2 movementInput;
     [SerializeField] float movementSpeed;
+
+    //Player Color
+    static Color myColor;
+    SpriteRenderer myAvatarSprite;
+
 
     private void OnEnable()
     {
@@ -27,9 +35,19 @@ public class AU_PlayerController : MonoBehaviour
 
     private void Start()
     {
+        if (hasControl)
+            localPlayer = this;
+
         myRB = GetComponent<Rigidbody>();
         myAvatar = transform.GetChild(0);
         myAnim = GetComponent<Animator>();
+
+        myAvatarSprite = myAvatar.GetComponent<SpriteRenderer>();
+        if (myColor == Color.clear)
+            myColor = Color.white;
+        if (!hasControl)
+            return;
+        myAvatarSprite.color = myColor;
     }
 
     private void Update()
@@ -49,4 +67,14 @@ public class AU_PlayerController : MonoBehaviour
     {
         myRB.velocity = movementInput * movementSpeed;
     }
+    
+    public void SetColor(Color newColor)
+    {
+        myColor = newColor;
+        if (myAvatarSprite != null)
+        {
+            myAvatarSprite.color = myColor;
+        }
+    }
+
 }

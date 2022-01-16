@@ -140,6 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4c5a6d9be7b9ae4da0235f14cb2be5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasControl: 0
   WASD:
     m_Name: WASD
     m_Type: 0
@@ -375,6 +376,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 559840098589587825, guid: ef6949116ef4e6b4688e5748d8fb6fd4, type: 3}
+      propertyPath: hasControl
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2061518436438352589, guid: ef6949116ef4e6b4688e5748d8fb6fd4, type: 3}
       propertyPath: m_Name
       value: AU_Player

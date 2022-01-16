@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 7979163123326869597}
   - component: {fileID: 1293444727678312473}
   - component: {fileID: 5342085759176453664}
+  - component: {fileID: 559840098589587825}
   - component: {fileID: 3734526385895617154}
   m_Layer: 0
   m_Name: AU_Player
@@ -146,6 +147,68 @@ CapsuleCollider:
   m_Height: 0.9163583
   m_Direction: 1
   m_Center: {x: -0.011405706, y: -0.041820854, z: 0}
+--- !u!114 &559840098589587825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061518436438352589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4c5a6d9be7b9ae4da0235f14cb2be5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WASD:
+    m_Name: WASD
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 0d1e88dd-c4c8-4c7b-b405-47a67eedbaa8
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 2D Vector
+      m_Id: 8ae7d416-2f1b-4335-af7e-d942491b4e2a
+      m_Path: 2DVector
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: WASD
+      m_Flags: 4
+    - m_Name: up
+      m_Id: f7c29ac0-af00-4047-a372-1cd400674bab
+      m_Path: <Keyboard>/upArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: WASD
+      m_Flags: 8
+    - m_Name: down
+      m_Id: 210129e6-9a05-4803-b424-60b1fb7acca1
+      m_Path: <Keyboard>/downArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: WASD
+      m_Flags: 8
+    - m_Name: left
+      m_Id: 5f82c5d5-440d-4dcb-97f7-6142fa05548d
+      m_Path: <Keyboard>/leftArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: WASD
+      m_Flags: 8
+    - m_Name: right
+      m_Id: a2a08a71-6485-4906-80d8-5ed8c0a6a4b9
+      m_Path: <Keyboard>/rightArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: WASD
+      m_Flags: 8
+    m_Flags: 0
+  movementSpeed: 5
 --- !u!95 &3734526385895617154
 Animator:
   serializedVersion: 3
