@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 3308966349204887300}
   - component: {fileID: 3313572368335617708}
   - component: {fileID: 7668781535679074099}
+  - component: {fileID: 5700934836202451908}
   m_Layer: 8
   m_Name: AU_Player
   m_TagString: Player
@@ -186,6 +187,8 @@ MonoBehaviour:
   ignoreForBody:
     serializedVersion: 2
     m_Bits: 0
+  lightMask: {fileID: 5753012629816892112}
+  myLightCaster: {fileID: 3313572368335617708}
 --- !u!95 &3308966349204887300
 Animator:
   serializedVersion: 3
@@ -241,16 +244,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 0
+  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 5700934836202451908}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &5700934836202451908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190137114298812235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 1
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &1393988749445184331
 GameObject:
   m_ObjectHideFlags: 0

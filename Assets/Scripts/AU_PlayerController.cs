@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 using UnityEngine.InputSystem;
 
 public class AU_PlayerController : MonoBehaviour
@@ -39,6 +40,13 @@ public class AU_PlayerController : MonoBehaviour
     [SerializeField] InputAction REPORT;
     [SerializeField] LayerMask ignoreForBody;
 
+    Camera myCamera;
+
+    //Networking
+    PhotonView myPV;
+    [SerializeField] GameObject lightMask;
+    [SerializeField] lightcaster myLightCaster;
+
     private void Awake()
     {
         KILL.performed += KillTarget;
@@ -61,17 +69,25 @@ public class AU_PlayerController : MonoBehaviour
 
     private void Start()
     {
-        if (hasControl)
+        myPV= GetComponent<PhotonView>();
+
+        if (myPV.IsMine)
             localPlayer = this;
 
+        myCamera = transform.GetChild(1).GetComponent<Camera>();
         targets = new List<AU_PlayerController>();
         myRB = GetComponent<Rigidbody>();
         myAvatar = transform.GetChild(0);
         myAnim = GetComponent<Animator>();
         myAvatarSprite = myAvatar.GetComponent<SpriteRenderer>();
 
-        if (!hasControl)
+        if (!myPV.IsMine)
+        {
+            myCamera.gameObject.SetActive(false);
+            lightMask.SetActive(false);
+            myLightCaster.enabled = false;
             return;
+        }
         if (myColor == Color.clear)
             myColor = Color.white;
 
@@ -83,7 +99,7 @@ public class AU_PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (!hasControl)
+        if (!myPV.IsMine)
             return;
 
         movementInput = WASD.ReadValue<Vector2>();
@@ -100,10 +116,22 @@ public class AU_PlayerController : MonoBehaviour
         {
             BodySearch();
         }
+
+        if (REPORT.triggered)
+        {
+            if (bodiesFound.Count == 0)
+                return;
+            Transform tempBody = bodiesFound[bodiesFound.Count - 1];
+            allBodies.Remove(tempBody);
+            bodiesFound.Remove(tempBody);
+            tempBody.GetComponent<AU_Body>().Report();
+        }
     }
 
     private void FixedUpdate()
     {
+        if (!myPV.IsMine)
+            return;
         myRB.velocity = movementInput * movementSpeed;
     }
 
