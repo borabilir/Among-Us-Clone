@@ -132,10 +132,7 @@ public class AU_PlayerController : MonoBehaviour
                 if (tempTarget.isImposter)
                     return;
                 else
-                {
                     targets.Add(tempTarget);
-                }
-
             }
         }
     }
