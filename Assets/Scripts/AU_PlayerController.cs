@@ -42,7 +42,12 @@ public class AU_PlayerController : MonoBehaviour, IPunObservable
     [SerializeField] InputAction REPORT;
     [SerializeField] LayerMask ignoreForBody;
 
+    //Interaction
+    [SerializeField] InputAction MOUSE;
+    Vector2 mousePositionInput;
     Camera myCamera;
+    [SerializeField] InputAction INTERACTION;
+    [SerializeField] LayerMask interactLayer;
 
     //Networking
     PhotonView myPV;
@@ -53,6 +58,7 @@ public class AU_PlayerController : MonoBehaviour, IPunObservable
     {
         KILL.performed += KillTarget;
         REPORT.performed += ReportBody;
+        INTERACTION.performed += Interact;
     }
 
     private void OnEnable()
@@ -60,6 +66,8 @@ public class AU_PlayerController : MonoBehaviour, IPunObservable
         WASD.Enable();
         KILL.Enable();
         REPORT.Enable();
+        MOUSE.Enable();
+        INTERACTION.Enable();
     }
 
     private void OnDisable()
@@ -67,6 +75,8 @@ public class AU_PlayerController : MonoBehaviour, IPunObservable
         WASD.Disable();
         KILL.Disable();
         REPORT.Disable();
+        MOUSE.Disable();
+        INTERACTION.Disable();
     }
 
     private void Start()
@@ -128,6 +138,8 @@ public class AU_PlayerController : MonoBehaviour, IPunObservable
             bodiesFound.Remove(tempBody);
             tempBody.GetComponent<AU_Body>().Report();
         }
+
+        mousePositionInput = MOUSE.ReadValue<Vector2>();
     }
 
     private void FixedUpdate()
@@ -214,7 +226,8 @@ public class AU_PlayerController : MonoBehaviour, IPunObservable
         if (!myPV.IsMine)
             return;
 
-        AU_Body tempBody = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AU_Body"),transform.position, transform.rotation).GetComponent<AU_Body>();
+        AU_Body tempBody = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AU_Body"),transform.position, transform.rotation)
+            .GetComponent<AU_Body>();
         tempBody.SetColor(myAvatarSprite.color);
 
         isDead = true;
@@ -260,6 +273,25 @@ public class AU_PlayerController : MonoBehaviour, IPunObservable
         allBodies.Remove(tempBody);
         bodiesFound.Remove(tempBody);
         tempBody.GetComponent<AU_Body>().Report();
+    }
+
+    void Interact(InputAction.CallbackContext context)
+    {
+        if(context.phase == InputActionPhase.Performed)
+        {
+            RaycastHit hit;
+            Ray ray = myCamera.ScreenPointToRay(mousePositionInput);
+            if(Physics.Raycast(ray, out hit, interactLayer))
+            {
+                if(hit.transform.tag == "Interactable")
+                {
+                    if (!hit.transform.GetChild(0).gameObject.activeInHierarchy)
+                        return;
+                    AU_Interactable temp = hit.transform.GetComponent<AU_Interactable>();
+                    temp.PlayMiniGame();
+                }
+            }
+        }
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
