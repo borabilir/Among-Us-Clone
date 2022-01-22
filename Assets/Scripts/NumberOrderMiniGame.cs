@@ -31,6 +31,7 @@ public class NumberOrderMiniGame : MonoBehaviour
             if (button == 9)
             {
                 nextButton = 0;
+                AU_GameController.instance.CompleteNumberTask();
                 ButtonOrderPanelClose();
                 return;
             }

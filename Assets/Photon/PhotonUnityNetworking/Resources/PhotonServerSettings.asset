@@ -41,6 +41,8 @@ MonoBehaviour:
   - RespawnSpaceship
   - RPC_Kill
   - RPC_Play
+  - RPC_SyncImposter
+  - RPC_CompleteNumberTask
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

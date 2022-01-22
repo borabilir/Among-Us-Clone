@@ -26,7 +26,7 @@ public class MyPhotonPlayer : MonoBehaviour
 
         if (myPV.IsMine)
         {
-            myPlayerAvatar = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AU_Player"), AU_GameController.instance.spawnPoints[myNumberInRoom].position, Quaternion.identity);
+            myPlayerAvatar = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AU_Player"), AU_SpawnPoints.instance.spawnPoints[myNumberInRoom].position, Quaternion.identity);
         }
     }
 

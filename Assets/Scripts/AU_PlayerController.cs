@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.InputSystem;
 using System.IO;
+using System;
 
 public class AU_PlayerController : MonoBehaviour, IPunObservable
 {
@@ -299,10 +300,18 @@ public class AU_PlayerController : MonoBehaviour, IPunObservable
         if (stream.IsWriting)
         {
             stream.SendNext(direction);
+            stream.SendNext(isImposter);
         }
         else
         {
-            direction = (float)stream.ReceiveNext();
+            this.direction = (float)stream.ReceiveNext();
+            this.isImposter = (bool)stream.ReceiveNext();
         }
+    }
+
+    public void BecomeImposter(int ImposterNumber)
+    {
+        if(PhotonNetwork.LocalPlayer == PhotonNetwork.PlayerList[ImposterNumber])
+            isImposter = true;
     }
 }
