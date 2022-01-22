@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 13367869864052663}
   - component: {fileID: 4440671737823143982}
   - component: {fileID: 5238617267326258252}
+  - component: {fileID: 3987785846285834424}
   m_Layer: 8
   m_Name: AU_Body
   m_TagString: Untagged
@@ -159,6 +160,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bodySprite: {fileID: 8743297413161753164}
+--- !u!114 &3987785846285834424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6503582150883817197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &8358329465582610681
 GameObject:
   m_ObjectHideFlags: 0
